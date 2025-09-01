@@ -38,9 +38,9 @@ export class LotteryService {
     } else {
       // デフォルト設定
       const defaultConfig: LotteryConfig = {
-        title: '懇談会くじ引き大会',
-        description: '学生と社員の交流を深める楽しいくじ引き！',
-        maxDraws: 100,
+        title: '社員交流会',
+        description: '学生と社員の交流を深めるくじ引き',
+        maxDraws: 20,
         allowDuplicates: false,
         animationSpeed: 'normal',
         items: this.generateDefaultItems()
@@ -64,7 +64,7 @@ export class LotteryService {
     });
 
     // エピック（5%）
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 2; i++) {
       items.push({
         id: `epic-${i}`,
         content: `準特別賞：ギフトカード${i}`,
@@ -75,7 +75,7 @@ export class LotteryService {
     }
 
     // レア（20%）
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 2; i++) {
       items.push({
         id: `rare-${i}`,
         content: `特別賞：QUOカード${i}`,
@@ -86,7 +86,7 @@ export class LotteryService {
     }
 
     // コモン（74%）
-    for (let i = 1; i <= 30; i++) {
+    for (let i = 1; i <= 2; i++) {
       items.push({
         id: `common-${i}`,
         content: `参加賞：お菓子セット${i}`,
