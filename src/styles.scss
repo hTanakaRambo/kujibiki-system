@@ -1,1 +1,273 @@
-/* You can add global styles to this file, and also import other style files */
+/* Material Design Variables */
+:root {
+  --primary-color: #c11920;
+  --primary-dark: #8b1318;
+  --primary-light: #e84850;
+  --accent-color: #ff6b6b;
+  --warn-color: #f44336;
+  --surface-color: #ffffff;
+  --background-color: #fafafa;
+  --on-surface-color: #000000;
+}
+
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Roboto', 'Noto Sans JP', sans-serif;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #fafafa;
+  color: #333;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+  
+  &:hover {
+    background: #a8a8a8;
+  }
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+/* Button Styles */
+.mat-mdc-raised-button {
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Form Field Styles */
+.mat-mdc-form-field {
+  margin-bottom: 16px !important;
+  
+  &.mat-form-field-appearance-outline {
+    .mat-mdc-text-field-wrapper {
+      padding-left: 12px !important;
+      padding-right: 12px !important;
+      background-color: white !important;
+    }
+    
+    .mat-mdc-form-field-input-control {
+      padding-left: 4px !important;
+      padding-right: 4px !important;
+    }
+    
+    input.mat-mdc-input-element,
+    textarea.mat-mdc-input-element {
+      padding-left: 8px !important;
+      padding-right: 8px !important;
+    }
+    
+    .mat-mdc-select {
+      padding-left: 8px !important;
+      padding-right: 8px !important;
+    }
+    
+    .mat-mdc-floating-label {
+      padding-left: 4px !important;
+    }
+    
+  }
+}
+
+/* Select Panel Styles */
+.mat-mdc-select-panel {
+  background-color: white !important;
+  
+  
+  .mat-mdc-option {
+    background-color: transparent;
+    
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+      
+    }
+    
+    &.mat-mdc-option-active {
+      background-color: rgba(193, 25, 32, 0.12);
+      
+    }
+  }
+}
+
+/* Card Styles */
+.mat-mdc-card {
+  border-radius: 16px !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  transition: box-shadow 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important;
+  }
+}
+
+/* Dialog Styles */
+.result-dialog {
+  .mat-mdc-dialog-container {
+    border-radius: 20px !important;
+    overflow: hidden;
+    
+    .mat-mdc-dialog-content {
+      padding: 0 !important;
+    }
+  }
+}
+
+/* Animation Classes */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease-out;
+}
+
+.slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+.bounce-in {
+  animation: bounceIn 0.8s ease-out;
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+  
+  h2 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus Styles */
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #c11920;
+  outline-offset: 2px;
+}

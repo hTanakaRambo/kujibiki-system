@@ -1,0 +1,215 @@
+<div class="admin-container">
+  <mat-toolbar color="primary" class="toolbar">
+    <button mat-icon-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span class="title">管理者設定</span>
+    <span class="spacer"></span>
+    <button mat-raised-button color="accent" (click)="saveSettings()">
+      <mat-icon>save</mat-icon>
+      設定保存
+    </button>
+  </mat-toolbar>
+
+  <div class="admin-content" *ngIf="currentConfig">
+    <mat-tab-group>
+      <!-- 基本設定タブ -->
+      <mat-tab label="基本設定">
+        <div class="tab-content">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>イベント情報</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>イベントタイトル</mat-label>
+                <input matInput [(ngModel)]="currentConfig.title">
+              </mat-form-field>
+              
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>説明文</mat-label>
+                <textarea matInput [(ngModel)]="currentConfig.description" rows="3"></textarea>
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>抽選設定</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-form-field appearance="outline">
+                <mat-label>最大抽選回数</mat-label>
+                <input matInput type="number" [(ngModel)]="currentConfig.maxDraws">
+              </mat-form-field>
+              
+              <mat-slide-toggle [(ngModel)]="currentConfig.allowDuplicates">
+                重複当選を許可
+              </mat-slide-toggle>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>アニメーション設定</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-form-field appearance="outline">
+                <mat-label>アニメーション速度</mat-label>
+                <mat-select [value]="getAnimationSpeed()" (selectionChange)="setAnimationSpeed($event.value)">
+                  <mat-option value="slow">遅い</mat-option>
+                  <mat-option value="normal">標準</mat-option>
+                  <mat-option value="fast">速い</mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+              <button mat-raised-button color="primary" (click)="testAnimation()">
+                <mat-icon>celebration</mat-icon>
+                アニメーションテスト
+              </button>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+      <!-- くじ管理タブ -->
+      <mat-tab label="くじ管理">
+        <div class="tab-content">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>新しいくじを追加</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="add-item-form">
+                <mat-form-field appearance="outline" class="item-content">
+                  <mat-label>くじの内容</mat-label>
+                  <input matInput [(ngModel)]="newItem.content" placeholder="例：特別賞：ギフトカード">
+                </mat-form-field>
+                
+                <mat-form-field appearance="outline" class="item-rarity">
+                  <mat-label>レア度</mat-label>
+                  <mat-select [(value)]="newItem.rarity">
+                    <mat-option value="common">コモン</mat-option>
+                    <mat-option value="rare">レア</mat-option>
+                    <mat-option value="epic">エピック</mat-option>
+                    <mat-option value="legendary">レジェンダリー</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                
+                <mat-form-field appearance="outline" class="item-weight">
+                  <mat-label>重み</mat-label>
+                  <input matInput type="number" [(ngModel)]="newItem.weight" min="1" max="100">
+                </mat-form-field>
+                
+                <button mat-raised-button color="primary" (click)="addItem()" [disabled]="!newItem.content?.trim()">
+                  <mat-icon>add</mat-icon>
+                  追加
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>既存のくじ一覧 ({{ currentConfig.items.length }}個)</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="items-list">
+                <div class="mobile-instruction" *ngIf="isMobile()">
+                  <mat-icon>swipe_left</mat-icon>
+                  <span>左にスワイプして削除</span>
+                </div>
+                
+                <app-swipeable-item 
+                  *ngFor="let item of currentConfig.items; let i = index"
+                  (delete)="removeItem(i)"
+                  [showDeleteButton]="!isMobile()"
+                >
+                  <mat-expansion-panel [expanded]="false">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <span class="item-rarity-badge" [class]="'rarity-' + item.rarity">
+                          {{ getRarityLabel(item.rarity) }}
+                        </span>
+                        <span class="item-content">{{ item.content }}</span>
+                      </mat-panel-title>
+                      <mat-panel-description>
+                        重み: {{ item.weight }}
+                        <span *ngIf="item.isUsed" class="used-badge">使用済み</span>
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    
+                    <div class="item-details">
+                      <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>内容</mat-label>
+                        <input matInput [(ngModel)]="item.content">
+                      </mat-form-field>
+                      
+                      <mat-form-field appearance="outline">
+                        <mat-label>レア度</mat-label>
+                        <mat-select [(value)]="item.rarity">
+                          <mat-option value="common">コモン</mat-option>
+                          <mat-option value="rare">レア</mat-option>
+                          <mat-option value="epic">エピック</mat-option>
+                          <mat-option value="legendary">レジェンダリー</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      
+                      <mat-form-field appearance="outline">
+                        <mat-label>重み</mat-label>
+                        <input matInput type="number" [(ngModel)]="item.weight" min="1" max="100">
+                      </mat-form-field>
+                      
+                      <button mat-raised-button color="warn" (click)="removeItem(i)" *ngIf="!isMobile()">
+                        <mat-icon>delete</mat-icon>
+                        削除
+                      </button>
+                    </div>
+                  </mat-expansion-panel>
+                </app-swipeable-item>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+      <!-- データ管理タブ -->
+      <mat-tab label="データ管理">
+        <div class="tab-content">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>データのエクスポート・インポート</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="data-actions">
+                <button mat-raised-button color="primary" (click)="exportData()">
+                  <mat-icon>download</mat-icon>
+                  設定をエクスポート
+                </button>
+                
+                <input type="file" #fileInput (change)="importData($event)" accept=".json" style="display: none;">
+                <button mat-raised-button color="accent" (click)="fileInput.click()">
+                  <mat-icon>upload</mat-icon>
+                  設定をインポート
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>リセット</mat-card-title>
+              <mat-card-subtitle>注意：この操作は元に戻せません</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <button mat-raised-button color="warn" (click)="resetAll()">
+                <mat-icon>refresh</mat-icon>
+                すべてリセット
+              </button>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

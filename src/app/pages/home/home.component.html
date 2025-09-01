@@ -1,0 +1,101 @@
+<div class="home-container">
+  <mat-toolbar color="primary" class="toolbar">
+    <span class="title">🎯 くじ引きシステム</span>
+    <span class="spacer"></span>
+    
+    <button mat-icon-button (click)="goToAdmin()" matTooltip="管理者設定">
+      <mat-icon>settings</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <div class="hero-section" *ngIf="config$ | async as config">
+    <div class="particles-bg"></div>
+    
+    <div class="hero-content">
+      <h1 class="hero-title">{{ config.title }}</h1>
+      <p class="hero-description">{{ config.description }}</p>
+      
+      <div class="stats-container">
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <div class="stat-value">{{ remainingItems }}</div>
+            <div class="stat-label">残りのくじ</div>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card class="stat-card" *ngIf="session$ | async as session">
+          <mat-card-content>
+            <div class="stat-value">{{ session.draws.length }}</div>
+            <div class="stat-label">抽選済み</div>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card class="stat-card" *ngIf="session$ | async as session">
+          <mat-card-content>
+            <div class="stat-value">{{ session.remainingDraws }}</div>
+            <div class="stat-label">残り抽選回数</div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      
+      <div class="action-buttons">
+        <button 
+          mat-raised-button 
+          color="accent" 
+          class="start-button"
+          (click)="startLottery()"
+          [disabled]="remainingItems === 0"
+        >
+          <mat-icon>casino</mat-icon>
+          <span>くじを引く</span>
+        </button>
+        
+        <button 
+          mat-stroked-button 
+          color="warn"
+          (click)="resetSession()"
+        >
+          <mat-icon>refresh</mat-icon>
+          <span>リセット</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="features-section">
+    <h2>機能</h2>
+    <div class="features-grid">
+      <mat-card class="feature-card">
+        <mat-card-content>
+          <mat-icon color="primary">animation</mat-icon>
+          <h3>美しいアニメーション</h3>
+          <p>くじ引きを盛り上げる豊富なアニメーション演出</p>
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card class="feature-card">
+        <mat-card-content>
+          <mat-icon color="primary">music_note</mat-icon>
+          <h3>サウンドエフェクト</h3>
+          <p>レア度に応じた効果音で臨場感アップ</p>
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card class="feature-card">
+        <mat-card-content>
+          <mat-icon color="primary">settings</mat-icon>
+          <h3>カスタマイズ可能</h3>
+          <p>くじの内容や確率を自由に設定</p>
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card class="feature-card">
+        <mat-card-content>
+          <mat-icon color="primary">devices</mat-icon>
+          <h3>レスポンシブデザイン</h3>
+          <p>PC・タブレット・スマートフォン対応</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div> -->
+</div>

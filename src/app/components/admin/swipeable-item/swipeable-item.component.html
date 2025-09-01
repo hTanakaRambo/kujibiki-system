@@ -1,0 +1,21 @@
+<div class="swipeable-container" *ngIf="!isDeleting" [@slideOut]>
+  <div 
+    class="swipeable-content"
+    #swipeContainer
+    [@swipe]="{value: swipeState, params: {offset: swipeOffset}}"
+  >
+    <ng-content></ng-content>
+  </div>
+  
+  <div class="delete-button-container" [class.visible]="swipeOffset < -50">
+    <button 
+      mat-raised-button 
+      color="warn" 
+      class="delete-button"
+      (click)="onDelete()"
+    >
+      <mat-icon>delete</mat-icon>
+      削除
+    </button>
+  </div>
+</div>

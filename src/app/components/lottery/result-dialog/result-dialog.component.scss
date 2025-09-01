@@ -1,0 +1,143 @@
+.result-dialog {
+  text-align: center;
+  padding: 20px;
+  
+  &.rarity-legendary {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    
+    .rarity-badge {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ff1744 100%);
+    }
+  }
+  
+  &.rarity-epic {
+    background: linear-gradient(135deg, #e91e63 0%, #f06292 100%);
+    
+    .rarity-badge {
+      background: linear-gradient(135deg, #9c27b0 0%, #ba68c8 100%);
+    }
+  }
+  
+  &.rarity-rare {
+    background: linear-gradient(135deg, #3f51b5 0%, #7986cb 100%);
+    
+    .rarity-badge {
+      background: linear-gradient(135deg, #2196f3 0%, #64b5f6 100%);
+    }
+  }
+  
+  &.rarity-common {
+    background: linear-gradient(135deg, #4caf50 0%, #81c784 100%);
+    
+    .rarity-badge {
+      background: linear-gradient(135deg, #009688 0%, #4db6ac 100%);
+    }
+  }
+}
+
+.dialog-header {
+  margin-bottom: 20px;
+  
+  h2 {
+    margin: 0;
+    font-size: 2rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: bounce 1s ease-in-out infinite;
+  }
+}
+
+.dialog-content {
+  margin: 20px 0;
+}
+
+.rarity-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  color: white;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: pulse 2s ease-in-out infinite;
+  
+  .rarity-icon {
+    font-size: 2rem;
+  }
+  
+  .rarity-label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}
+
+.result-content {
+  margin: 30px 0;
+  
+  h3 {
+    font-size: 1.8rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+  }
+}
+
+.result-image {
+  margin: 20px 0;
+  
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.celebration-message {
+  margin: 20px 0;
+  
+  p {
+    font-size: 1.2rem;
+    color: white;
+    margin: 0;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+  
+  button {
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}

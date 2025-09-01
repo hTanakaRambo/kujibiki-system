@@ -1,0 +1,46 @@
+<div class="lottery-container">
+  <mat-toolbar color="primary" class="toolbar">
+    <button mat-icon-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span class="title">くじ引き</span>
+    <span class="spacer"></span>
+    <span class="remaining-count">残り: {{ getRemainingCount() }}枚</span>
+  </mat-toolbar>
+
+  <div class="lottery-content">
+    <div class="instruction" *ngIf="!isDrawing">
+      <h2>好きな番号のパネルをクリックしてください</h2>
+      <p>番号を指定してくじ引きが始まります（全{{ panels.length }}枚）</p>
+    </div>
+
+    <div class="instruction drawing" *ngIf="isDrawing">
+      <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+      <h2>抽選中...</h2>
+    </div>
+
+    <div class="panels-grid" [@shake]="shakeState">
+      <div 
+        *ngFor="let panel of panels; let i = index"
+        class="panel-wrapper"
+        (click)="onPanelClick(i)"
+      >
+        <div 
+          class="panel"
+          [@flip]="panel.isFlipped ? 'flipped' : 'default'"
+          [@pulse]="panel.isPulsing ? 'pulsing' : 'normal'"
+          [class.selected]="panel.isSelected"
+          [class.flipped]="panel.isFlipped"
+          [class.disabled]="panel.isFlipped || isDrawing"
+        >
+          <div class="panel-front">
+            <div class="panel-number">{{ i + 1 }}</div>
+          </div>
+          <div class="panel-back">
+            <span class="result-emoji">{{ panel.content }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

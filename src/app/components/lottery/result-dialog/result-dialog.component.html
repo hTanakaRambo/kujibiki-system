@@ -1,0 +1,46 @@
+<div class="result-dialog" [class]="getRarityClass()">
+  <!-- <div class="dialog-header">
+    <h2>おめでとうございます！</h2>
+  </div> -->
+  
+  <div class="dialog-content">
+    <!-- <div class="rarity-badge">
+      <span class="rarity-icon">{{ getRarityIcon() }}</span>
+      <span class="rarity-label">{{ getRarityLabel() }}</span>
+    </div> -->
+    
+    <div class="result-content">
+      <h3>{{ result.item.content }}</h3>
+    </div>
+    
+    <div class="result-image" *ngIf="result.item.imageUrl">
+      <img [src]="result.item.imageUrl" [alt]="result.item.content">
+    </div>
+    
+    <div class="celebration-message">
+      <p *ngIf="result.item.rarity === 'legendary'">
+        🎊 超レア！すごい運の持ち主です！ 🎊
+      </p>
+      <p *ngIf="result.item.rarity === 'epic'">
+        ✨ エピック当選！おめでとうございます！ ✨
+      </p>
+      <p *ngIf="result.item.rarity === 'rare'">
+        ⭐ レア当選！ラッキーです！ ⭐
+      </p>
+      <p *ngIf="result.item.rarity === 'common'">
+        🎁 ご参加ありがとうございます！ 🎁
+      </p>
+    </div>
+  </div>
+  
+  <div class="dialog-actions">
+    <!-- <button mat-raised-button color="primary" (click)="share()">
+      <mat-icon>share</mat-icon>
+      シェアする
+    </button> -->
+    <button mat-raised-button color="accent" (click)="close()">
+      <mat-icon>check_circle</mat-icon>
+      閉じる
+    </button>
+  </div>
+</div>
